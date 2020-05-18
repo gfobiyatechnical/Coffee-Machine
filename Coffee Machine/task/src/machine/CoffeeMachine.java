@@ -1,49 +1,145 @@
 package machine;
-
-import java.util.Scanner;
+import java.util.*;
 
 public class CoffeeMachine {
-    public void espresso(){
-        int water = 250;
-        int coffeeBeans = 16;
-        int cost = 4;
 
-    }
-    public void latte(){
-        int milk = 75;
-        int water = 350;
-        int cost = 7;
-        int coffeeBeans = 12;
-
-    }
-    public void cappuccino(){
-        int milk = 100;
-        int water = 200;
-        int coffeeBeans = 12;
-        int cost = 6;
-
-    }
-    public void latte(){
-        int coffee = 250;
-        int water = 16;
-        int cost = 4;
-
-    }
-}
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        String input;
+        Scanner sc = new Scanner(System.in);
+        int[] coffeeMachine = {400, 540, 120, 9, 550};                   // water, milk, coffee, cups, money
 
-        //amount of each ingredient per one cup
-        System.out.println("The coffee machine has:\n400 of water\n540 of milk\n120 of coffee beans\n9 of disp\n");
+        boolean running = true;
+        showSupply(coffeeMachine);
         System.out.println("Write action (buy, fill, take):");
-        String input = scanner.next();
-        switch (input){
-            case "take": System.out.println("I gave you $550\n\nThe coffee machine has:\n400 of water\n540 of milk\n120 of coffee beans\n9 of disposable cups\n0 of money");
+        while (running) {
+            try{
+                input = sc.nextLine();
+            }
+            catch (NoSuchElementException noSuchElementException){
+                System.out.println(noSuchElementException);
                 break;
-            case "fill": System.out.println("");
+            }
+            switch (input) {
+                case "buy" :
+                    buy(coffeeMachine);
+                    showSupply(coffeeMachine);
+                    break;
+                case "fill" :
+                    fill(coffeeMachine);
+                    showSupply(coffeeMachine);
+                    break;
+                case "take" :
+                    take(coffeeMachine);
+                    showSupply(coffeeMachine);
+                    break;
+                default: System.out.println("NoSuchEntryFound");
+            }
+        }
+    }
+    public static void showSupply(int arr[]) {
+        System.out.println("The coffee machine has:");
+        System.out.println(arr[0] + " of water");
+        System.out.println(arr[1] + " of milk");
+        System.out.println(arr[2] + " of coffee beans");
+        System.out.println(arr[3] + " of disposable cups");
+        System.out.println(arr[4] + " of money");
+        System.out.println();
+    }
+
+    public static void buy(int arr[]) {
+        System.out.println("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino, back - to main menu:");
+        Scanner scanner = new Scanner(System.in);
+        switch (scanner.nextInt()) {
+            case 1 :
+                if (arr[0] < 250) {
+                    System.out.println("Sorry, not enough water!");
+                    break;
+                }
+                if (arr[2] < 16) {
+                    System.out.println("Sorry, not enough coffee beans!");
+                    break;
+                }
+                if (arr[3] < 1) {
+                    System.out.println("Sorry, not enough cups!");
+                    break;
+                }
+                System.out.println("I have enough resources, making you a coffee!");
+                arr[0] -= 250;
+                arr[2] -= 16;
+                arr[3] -= 1;
+                arr[4] += 4;
+
                 break;
-            case "buy": System.out.println("");
+            case 2 :
+                if (arr[0] < 350) {
+                    System.out.println("Sorry, not enough water!");
+                    break;
+                }
+                if (arr[0] < 75) {
+                    System.out.println("Sorry, not enough milk!");
+                    break;
+                }
+                if (arr[2] < 20) {
+                    System.out.println("Sorry, not enough coffee beans!");
+                    break;
+                }
+                if (arr[3] < 1) {
+                    System.out.println("Sorry, not enough cups!");
+                    break;
+                }
+                System.out.println("I have enough resources, making you a coffee!");
+                arr[0] -= 350;
+                arr[1] -= 75;
+                arr[2] -= 20;
+                arr[3] -= 1;
+                arr[4] += 7;
                 break;
-            default: System.out.println("");
+            case 3 :
+                if (arr[0] < 200) {
+                    System.out.println("Sorry, not enough water!");
+                    break;
+                }
+                if (arr[0] < 200) {
+                    System.out.println("Sorry, not enough milk!");
+                    break;
+                }
+                if (arr[2] < 12) {
+                    System.out.println("Sorry, not enough coffee beans!");
+                    break;
+                }
+                if (arr[3] < 1) {
+                    System.out.println("Sorry, not enough cups!");
+                    break;
+                }
+                System.out.println("I have enough resources, making you a coffee!");
+                arr[0] -= 200;
+                arr[1] -= 100;
+                arr[2] -= 12;
+                arr[3] -= 1;
+                arr[4] += 6;
+
+                break;
+            default :
+                break;
+        }
+    }
+
+    public static void fill(int arr[]) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Write how many ml of water do you want to add:");
+        arr[0] += scanner.nextInt();
+        System.out.println("Write how many ml of milk do you want to add:");
+        arr[1] += scanner.nextInt();
+        System.out.println("Write how many grams of coffee beans do you want to add:");
+        arr[2] += scanner.nextInt();
+        System.out.println("Write how many disposable cups of coffee do you want to add:");
+        arr[3] += scanner.nextInt();
+
+    }
+
+    public static void take(int arr[]) {
+        System.out.println("I gave you $" + arr[4]);
+        arr[4] = 0;
+        System.out.println();
     }
 }

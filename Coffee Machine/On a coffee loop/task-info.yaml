@@ -5,9 +5,9 @@ files:
   visible: false
   text: |
     import machine.CoffeeMachine;
-    import org.hyperskill.hstest.v6.stage.BaseStageTest;
-    import org.hyperskill.hstest.v6.testcase.CheckResult;
-    import org.hyperskill.hstest.v6.testcase.TestCase;
+    import org.hyperskill.hstest.stage.StageTest;
+    import org.hyperskill.hstest.testcase.CheckResult;
+    import org.hyperskill.hstest.testcase.TestCase;
 
     import java.util.ArrayList;
     import java.util.List;
@@ -30,7 +30,7 @@ files:
         }
     }
 
-    public class CoffeeMachineTest extends BaseStageTest<TestClue> {
+    public class CoffeeMachineTest extends StageTest<TestClue> {
 
         public CoffeeMachineTest() {
             super(CoffeeMachine.class);
@@ -163,7 +163,7 @@ files:
             String[] lines = reply.split("\\n");
 
             if (lines.length <= 1) {
-                return CheckResult.FALSE;
+                return CheckResult.wrong("");
             }
 
             int water_ = clue.water;
